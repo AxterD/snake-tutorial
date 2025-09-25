@@ -1,0 +1,20 @@
+name = "snake_game"
+description = ""
+version = "0.1.0-dev"
+
+authors = ["Your Name"]
+maintainers = ["Your Name <example@example.com>"]
+licenses = "MIT OR Apache-2.0 WITH LLVM-exception"
+website = ""
+tags = []
+
+executables = ["snake_game"]
+
+[[depends-on]]
+noki = "*"
+
+[[pins]]
+noki = { path = ".." }
+
+[environment]
+ADAFLAGS.append = "-gnat2022"
