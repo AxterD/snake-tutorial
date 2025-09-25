@@ -1,4 +1,5 @@
 with Noki;
+with Snake; use Snake;
 with GNAT.OS_Lib;
 
 procedure Snake_Game is
@@ -21,6 +22,12 @@ begin
             end if;
          when Play =>
             Log ("We are playing.");
+            Draw (Tongue_Pix);
+            Draw (Head_Pix);
+            Draw (Torso_Pix);
+            Draw (Torso_Pix);
+            Draw (Torso_Pix);
+            Draw (Torso_Pix);
             Game_State := Game_Over;
          when Game_Over =>
             Log ("Game Over!");
