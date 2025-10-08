@@ -8,6 +8,9 @@ procedure Snake_Game is
    Input_Task : Input_Task_T;
    type Game_State_T is (Welcome, Play, Game_Over, Undefined);
    Game_State : Game_State_T := Welcome;
+   Player : Texture_T := [[Tongue_Pix, Head_Pix,  Empty_Pix],
+                          [Empty_Pix,  Torso_Pix, Empty_Pix],
+                          [Empty_Pix,  Torso_Pix, Torso_Pix]];
 begin
    loop
       exit when Input_Cmd.Get = Quit;
@@ -21,13 +24,7 @@ begin
                Input_Cmd.Reset;
             end if;
          when Play =>
-            Log ("We are playing.");
-            Draw (Tongue_Pix);
-            Draw (Head_Pix);
-            Draw (Torso_Pix);
-            Draw (Torso_Pix);
-            Draw (Torso_Pix);
-            Draw (Torso_Pix);
+            Render (Player);
             Game_State := Game_Over;
          when Game_Over =>
             Log ("Game Over!");
