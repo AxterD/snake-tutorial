@@ -1,6 +1,6 @@
 with Noki;
 with Snake; use Snake;
-with GNAT.OS_Lib;
+with Ada.Text_IO;
 
 procedure Snake_Game is
    package N renames Noki;
@@ -8,13 +8,12 @@ procedure Snake_Game is
    Input_Task : Input_Task_T;
    type Game_State_T is (Welcome, Play, Game_Over, Undefined);
    Game_State : Game_State_T := Welcome;
-   Player : Texture_T := [[Tongue_Pix, Head_Pix,  Empty_Pix],
-                          [Empty_Pix,  Torso_Pix, Empty_Pix],
-                          [Empty_Pix,  Torso_Pix, Torso_Pix]];
+   Player : Snake_T;
 begin
+   Ada.Text_IO.Put (Hide_Cursor);
    loop
       exit when Input_Cmd.Get = Quit;
-      Log (Clear_Screen);
+      Ada.Text_IO.Put (Clear_Screen);
       case Game_State is
          when Welcome =>
             Log ("Welcome to Snakotron!");
@@ -24,8 +23,9 @@ begin
                Input_Cmd.Reset;
             end if;
          when Play =>
-            Render (Player);
-            Game_State := Game_Over;
+            Player.Transform.Pt.X := @ + 1.0;
+            Player.Transform.Pt.Y := @ + 1.0;
+            Render (Player.Texture, Player.Transform.Pt);
          when Game_Over =>
             Log ("Game Over!");
             Log ("Press Enter/Space to replay");
@@ -36,7 +36,10 @@ begin
          when others =>
             null;
       end case;
+      Ada.Text_IO.Flush;
       delay 1.0;
    end loop;
-   GNAT.OS_Lib.OS_Exit (0);
+   Ada.Text_IO.Put (Show_Cursor);
+   Ada.Text_IO.Put (Clear_Screen);
+   Ada.Text_IO.Flush;
 end Snake_Game;

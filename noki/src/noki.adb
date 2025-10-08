@@ -39,12 +39,14 @@ package body Noki is
       Ada.Wide_Wide_Text_IO.Put (+P);
    end Draw;
 
-   procedure Render (T : Texture_T) is
+   procedure Render (T : Texture_T; P : Pt2_T) is
       function Move_Cursor (Row : Positive; Col : Positive) return String is
          (CSI & Trim (Row'Image) & ";" & Trim (Col'Image) & "H");
+      Dx : Integer := Integer (P.X);
+      Dy : Integer := Integer (P.Y);
    begin
       for Y in T.First_Index .. T.Last_Index loop
-         Ada.Text_IO.Put (Move_Cursor (Y + 1, Positive'First));
+         Ada.Text_IO.Put (Move_Cursor (Y + 1 + Dy, Positive'First + Dx));
          for X in T (Y).First_Index .. T (Y).Last_Index loop
             Draw (T (Y) (X));
          end loop;
@@ -73,6 +75,7 @@ package body Noki is
          case C is
             when 'q' | Character'Val (27) => 
                Input_Cmd.Set (Quit);
+               exit;
             when Character'Val (10) | Character'Val (32) => 
                Input_Cmd.Set (Enter);
             when others => 

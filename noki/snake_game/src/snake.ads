@@ -10,4 +10,11 @@ package Snake is
                             B  => True);  
    Head_Pix   : Pixel_T := (Acid_Lime, Deep_Navy, Head, True);
    Torso_Pix  : Pixel_T := (Neon_Pink, Deep_Navy, Torso, True);
+
+   type Snake_T is record
+      Transform : Transform_T;
+      Texture   : Texture_T := [[Tongue_Pix, Head_Pix,  Empty_Pix],
+                                [Empty_Pix,  Torso_Pix, Empty_Pix],
+                                [Empty_Pix,  Torso_Pix, Torso_Pix]];
+   end record;
 end Snake;

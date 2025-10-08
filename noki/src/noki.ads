@@ -4,6 +4,15 @@ package Noki is
    subtype WWChar_T is Wide_Wide_Character;
    subtype WWStr_T is Wide_Wide_String;
 
+   type Pt2_T is record
+      X : Float := 0.0;
+      Y : float := 0.0;
+   end record;
+
+   type Transform_T is record
+      Pt : Pt2_T := (0.0, 0.0);
+   end record;
+
    type U8_T is mod 2 ** 8 with Size => 8;
 
    type Color_T is record                 
@@ -37,7 +46,7 @@ package Noki is
    Black     : Color_T := (0, 0, 0);
    Empty_Pix : Pixel_T := (Black, Black, ' ', False);
 
-   procedure Render (T : Texture_T);
+   procedure Render (T : Texture_T; P : Pt2_T);
 
    Deep_Navy     : Color_T := (13, 2, 33);
    Hot_Tangerine : Color_T := (255, 122, 24);
@@ -48,6 +57,10 @@ package Noki is
    
    function Clear_Screen return String is 
       (CSI & "2J" & CSI & "H");
+   function Hide_Cursor return String is 
+      (CSI & "?25l");
+   function Show_Cursor return String is 
+      (CSI & "?25h");
 
    function "+" (P : Pixel_T) return WWStr_T;
    procedure Log (S : String);
